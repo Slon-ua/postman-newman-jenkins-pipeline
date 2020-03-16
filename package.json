@@ -6,7 +6,7 @@
   	"test":"tests"
   },
   "scripts": {
-    "api-tests-production": "newman run tests/performance-101.postman_collection.json -n 3 -d data.csv --reporters cli,junit --reporter-junit-export newman.xml"
+    "api-tests-production": "newman run tests/performance-101.postman_collection.json --reporters cli,junit --reporter-junit-export newman.xml"
   },
   "author": "Sergii Kokhan",
   "dependencies": {
