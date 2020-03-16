@@ -1,0 +1,13 @@
+node {
+	stage('Postman test'){
+		git 'https://github.com/Slon-ua/postman-newman-jenkins-pipeline.git'
+		sh 'npm install'
+		try {
+			sh 'npm run api-tests-production'
+			currentBuild.result = 'SUCCESS'
+		} catch (Exception ex){
+			currentBuild.result = 'FAILURE'
+		}
+		junit 'newman.xml'
+	}
+}

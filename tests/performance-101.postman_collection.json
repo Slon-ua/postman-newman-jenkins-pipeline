@@ -1,0 +1,499 @@
+{
+	"info": {
+		"_postman_id": "7c08250a-0d4e-4fec-94b8-65990252df09",
+		"name": "performance-101",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication service",
+			"item": [
+				{
+					"name": "/api/auth/generate_token",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "9370bf56-cf0e-4b13-a003-a47d38ce1ec5",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"  -- 1+1\");",
+									"",
+									"",
+									"// получить глобальную переменную",
+									"pm.globals.get(\"token_id\");",
+									"// получить переменную из окружения",
+									"pm.environment.get(\"token_id\");",
+									"// получить переменную из любого пространства согласно приоритету",
+									"pm.variables.get(\"token_id\");",
+									"",
+									"",
+									"",
+									"",
+									"// получить переменную из любого пространства согласно приоритету",
+									"console.log(pm.variables.get(\"token_id\"));",
+									"// получить переменную из окружения",
+									"console.log(pm.environment.get(\"token_id\"));",
+									"// получить глобальную переменную",
+									"console.log(pm.globals.get(\"token_id\"));"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "01c66eae-abf1-4f7f-8d5d-8d569aeabae5",
+								"exec": [
+									"console.log(pm.variables.get('token_id'));  // выводит данные в консоль\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable (\"token_id\", jsonData.token); // присваивает значение для переменной Postman\r",
+									"console.log(pm.variables.get(\"token_id\"));\r",
+									"pm.environment.get(\"token_id\");\r",
+									"\r",
+									"\r",
+									"\r",
+									"// получить глобальную переменную\r",
+									"pm.globals.get(\"token_id\");\r",
+									"// получить переменную из окружения\r",
+									"pm.environment.get(\"token_id\");\r",
+									"// получить переменную из любого пространства согласно приоритету\r",
+									"pm.variables.get(\"token_id\");\r",
+									"\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}:7778/api/auth/generate_token",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7778",
+							"path": [
+								"api",
+								"auth",
+								"generate_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/validate_token/<string:token_id>",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "963a6622-ce80-42a0-aee3-21471cd7410f",
+								"exec": [
+									"console.log(pm.variables.get(\"token_id\")+\"   .\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "894b2a8a-fc50-42cb-ae5b-f39202caf881",
+								"exec": [
+									"//console.log(pm.variables.get(\"token_id\")+\"   -- 1+1\");",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"type": "text",
+								"value": ""
+							}
+						],
+						"url": {
+							"raw": "{{URL}}:7778/api/auth/validate_token/{{token_id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7778",
+							"path": [
+								"api",
+								"auth",
+								"validate_token",
+								"{{token_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Product service",
+			"item": [
+				{
+					"name": "/api/products/get_all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "33343db9-55e3-42e6-a3b8-90223613291e",
+								"exec": [
+									"console.log(pm.variables.get('product_id'));\r",
+									"var jsonData1 = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable ('product_id', jsonData1[\"0\"][\"_id\"]);\r",
+									"console.log(pm.variables.get('product_id'));\r",
+									"console.log(pm.variables.get('token_id'));\r",
+									"var prod_id = {\r",
+									"    \"id\": 2947,\r",
+									"    \"customerRewardsId\": 0,\r",
+									"    \"customerId\": 1524,\r",
+									"    \"transactionDate\": \"2019-03-31T09:24:43.230+0000\"\r",
+									"}\r",
+									"console.log(prod_id);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "58b86fc5-ae48-4b47-bd3c-1dd8b90d1578",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=998a24af-6ab1-41d0-b724-1336cf39a233",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{{token_id}}\n{{product_id}}\nprod_id"
+						},
+						"url": {
+							"raw": "{{URL}}:7777/api/products/get_all",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7777",
+							"path": [
+								"api",
+								"products",
+								"get_all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/products/get_product/<string:product_id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4b598230-3d37-40e1-938e-2a68eb3b2ea3",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"value": "token={{token_id}}",
+								"type": "text"
+							},
+							{
+								"key": "Cookie",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{URL}}:7777/api/products/get_product/{{product_id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7777",
+							"path": [
+								"api",
+								"products",
+								"get_product",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Cart service",
+			"item": [
+				{
+					"name": "/api/cart/get_items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72058b72-2fc3-46b4-9974-3b73dde3bb7a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token={{token_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}:7779/api/cart/get_items",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"get_items"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/cart/add_item/<string:product_id>",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "82001d5d-929c-411c-aa12-2b9f12ebf420",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token={{token_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}:7779/api/cart/add_item/{{product_id}}",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"add_item",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/api/cart/checkout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aa6c68bf-2fa4-44b2-bd86-99835aa3ebd7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token=050dd87e-fe9a-4fb7-8361-f9ff65105ff3",
+								"disabled": true
+							},
+							{
+								"key": "Cookie",
+								"type": "text",
+								"value": "token={{token_id}}"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}:7779/api/cart/checkout",
+							"host": [
+								"{{URL}}"
+							],
+							"port": "7779",
+							"path": [
+								"api",
+								"cart",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "da9c8100-bf2a-445a-97b8-e675fe54bc98",
+				"type": "text/javascript",
+				"exec": [
+					"// var jsonData = JSON.parse(responseBody); // присваивает переменной значение содержимого JSON",
+					"// postman.setEnvironmentVariable (\"token_id\", jsonData.token); // присваивает значение для переменной Postman",
+					"// console.log(pm.variables.get(\"token_id\")); // выводит переменную в консоль",
+					"",
+					"",
+					"/*",
+					"// получить переменную из любого пространства согласно приоритету",
+					"console.log(pm.variables.get(\"token_id\"));",
+					"// получить переменную из окружения",
+					"console.log(pm.environment.get(\"token_id\"));",
+					"// получить глобальную переменную",
+					"console.log(pm.globals.get(\"token_id\"));",
+					"*/"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2200e0aa-fc08-4bd8-818b-ede11d445a7c",
+				"type": "text/javascript",
+				"exec": [
+					"// var jsonData = JSON.parse(responseBody);",
+					"// postman.setEnvironmentVariable (\"token_id\", jsonData.token);",
+					"// console.log(pm.variables.get(\"token_id\"));"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "9df2b07e-d105-4c35-8e19-5a6b88930e84",
+			"key": "token_id",
+			"value": "123",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "9ca6ee87-9177-4ca4-87ba-da9d2f3d693f",
+			"key": "product_id",
+			"value": "321",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"id": "e61fb453-1e70-498c-8b81-af35812fab56",
+			"key": "URL",
+			"value": "192.168.99.100",
+			"type": "string"
+		},
+		{
+			"id": "d0fea985-8ee9-4ea9-83e5-3056a0c8f888",
+			"key": "URL2",
+			"value": "104.248.142.48",
+			"type": "string"
+		},
+		{
+			"id": "2c9ebb22-0f52-4bfc-b561-00cacebc24e9",
+			"key": "URL3",
+			"value": "172.17.0.1",
+			"type": "string"
+		},
+		{
+			"id": "ece79f4b-e026-44f4-b436-14194f67983d",
+			"key": "URL4",
+			"value": "127.0.0.1",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
