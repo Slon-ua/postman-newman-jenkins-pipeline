@@ -1,6 +1,6 @@
 node {
 	stage('Postman test'){
-		git 'https://github.com/Slon-ua/postman-newman-jenkins-pipeline.git'
+		git 'https://www.getpostman.com/collections/e43e5c50a55c674a4911'
 		sh 'npm install'
 		try {
 			sh 'npm run api-tests-production'
