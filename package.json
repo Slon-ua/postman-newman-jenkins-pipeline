@@ -6,7 +6,7 @@
   	"test":"tests"
   },
   "scripts": {
-    //"api-tests-production": "newman run https://www.getpostman.com/collections/5f7f112723a37966037d --reporters cli,junit --reporter-junit-export newman.xml"
+    /*"api-tests-production": "newman run https://www.getpostman.com/collections/5f7f112723a37966037d --reporters cli,junit --reporter-junit-export newman.xml"*/
     "api-tests-production": "newman run https://www.getpostman.com/collections/5f7f112723a37966037d -r allure --reporter-allure-export $PWD"
   },
   "author": "Sergii Kokhan",
